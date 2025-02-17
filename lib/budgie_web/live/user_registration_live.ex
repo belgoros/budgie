@@ -6,7 +6,7 @@ defmodule BudgieWeb.UserRegistrationLive do
 
   def render(assigns) do
     ~H"""
-    <div class="mx-auto max-w-sm">
+    <div class="max-w-sm mx-auto">
       <.header class="text-center">
         Register for an account
         <:subtitle>
@@ -30,6 +30,8 @@ defmodule BudgieWeb.UserRegistrationLive do
         <.error :if={@check_errors}>
           Oops, something went wrong! Please check the errors below.
         </.error>
+
+        <.input field={@form[:name]} type="text" label="Name" required />
 
         <.input field={@form[:email]} type="email" label="Email" required />
         <.input field={@form[:password]} type="password" label="Password" required />
