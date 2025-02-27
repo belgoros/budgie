@@ -1,4 +1,4 @@
-defmodule BudgieWeb.BudgieShowLiveText do
+defmodule BudgieWeb.BudgetShowLiveText do
   use BudgieWeb.ConnCase, async: true
 
   import Phoenix.LiveViewTest
