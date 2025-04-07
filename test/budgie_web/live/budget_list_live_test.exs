@@ -64,9 +64,11 @@ defmodule BudgieWeb.BudgetListLiveTest do
           }
         })
 
-      {:ok, _lv, html} =
-        render_submit(form)
-        |> follow_redirect(conn)
+      submission_result = render_submit(form)
+
+      assert [created_budget] = Tracking.list_budgets()
+
+      {:ok, _lv, html} = follow_redirect(submission_result, conn, ~p"/budgets/#{created_budget}")
 
       assert html =~ "Budget created"
       assert html =~ "A new name"
@@ -106,8 +108,8 @@ defmodule BudgieWeb.BudgetListLiveTest do
 
     attrs =
       params_for(:budget,
-        start_date: ~D[2025-12-31],
-        end_date: ~D[2025-01-01]
+        start_date: ~D[2025-12-01],
+        end_date: ~D[2025-01-31]
       )
 
     form =
