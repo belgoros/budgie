@@ -80,9 +80,10 @@ defmodule BudgieWeb.BudgetShowLive do
     end
   end
 
-  defp default_transaction do
+  defp default_transaction(budget) do
     %BudgetTransaction{
-      effective_date: Date.utc_today()
+      effective_date: Date.utc_today(),
+      budget: budget
     }
   end
 
@@ -94,7 +95,7 @@ defmodule BudgieWeb.BudgetShowLive do
   <.transaction_amount transaction={%BudgetTransaction{type: :spending, amount: Decimal.new("24.05")}} />
 
   Output:
-  <span class="tabular-nums text-red-500">-24.05</span>
+  <span class="text-red-500 tabular-nums">-24.05</span>
   """
 
   attr :transaction, BudgetTransaction, required: true
@@ -113,7 +114,7 @@ defmodule BudgieWeb.BudgetShowLive do
   <.currency amount={Decimal.new("246.01")} />
 
   Output:
-  <span class="tabular-nums text-green-500">246.01</span>
+  <span class="text-green-500 tabular-nums">246.01</span>
   """
   attr :amount, Decimal, required: true
   attr :class, :string, default: nil
