@@ -50,7 +50,7 @@ defmodule BudgieWeb.CoreComponents do
       data-cancel={JS.exec(@on_cancel, "phx-remove")}
       class="relative z-50 hidden"
     >
-      <div id={"#{@id}-bg"} class="bg-zinc-50/90 fixed inset-0 transition-opacity" aria-hidden="true" />
+      <div id={"#{@id}-bg"} class="fixed inset-0 transition-opacity bg-zinc-50/90" aria-hidden="true" />
       <div
         class="fixed inset-0 overflow-y-auto"
         aria-labelledby={"#{@id}-title"}
@@ -59,23 +59,23 @@ defmodule BudgieWeb.CoreComponents do
         aria-modal="true"
         tabindex="0"
       >
-        <div class="flex min-h-full items-center justify-center">
+        <div class="flex items-center justify-center min-h-full">
           <div class="w-full max-w-3xl p-4 sm:p-6 lg:py-8">
             <.focus_wrap
               id={"#{@id}-container"}
               phx-window-keydown={JS.exec("data-cancel", to: "##{@id}")}
               phx-key="escape"
               phx-click-away={JS.exec("data-cancel", to: "##{@id}")}
-              class="shadow-zinc-700/10 ring-zinc-700/10 relative hidden rounded-2xl bg-white p-14 shadow-lg ring-1 transition"
+              class="relative hidden transition bg-white shadow-lg shadow-zinc-700/10 ring-zinc-700/10 rounded-2xl p-14 ring-1"
             >
               <div class="absolute top-6 right-5">
                 <button
                   phx-click={JS.exec("data-cancel", to: "##{@id}")}
                   type="button"
-                  class="-m-3 flex-none p-3 opacity-20 hover:opacity-40"
+                  class="flex-none p-3 -m-3 opacity-20 hover:opacity-40"
                   aria-label={gettext("close")}
                 >
-                  <.icon name="hero-x-mark-solid" class="h-5 w-5" />
+                  <.icon name="hero-x-mark-solid" class="w-5 h-5" />
                 </button>
               </div>
               <div id={"#{@id}-content"}>
@@ -122,13 +122,13 @@ defmodule BudgieWeb.CoreComponents do
       {@rest}
     >
       <p :if={@title} class="flex items-center gap-1.5 text-sm font-semibold leading-6">
-        <.icon :if={@kind == :info} name="hero-information-circle-mini" class="h-4 w-4" />
-        <.icon :if={@kind == :error} name="hero-exclamation-circle-mini" class="h-4 w-4" />
+        <.icon :if={@kind == :info} name="hero-information-circle-mini" class="w-4 h-4" />
+        <.icon :if={@kind == :error} name="hero-exclamation-circle-mini" class="w-4 h-4" />
         {@title}
       </p>
       <p class="mt-2 text-sm leading-5">{msg}</p>
-      <button type="button" class="group absolute top-1 right-1 p-2" aria-label={gettext("close")}>
-        <.icon name="hero-x-mark-solid" class="h-5 w-5 opacity-40 group-hover:opacity-70" />
+      <button type="button" class="absolute p-2 group top-1 right-1" aria-label={gettext("close")}>
+        <.icon name="hero-x-mark-solid" class="w-5 h-5 opacity-40 group-hover:opacity-70" />
       </button>
     </div>
     """
@@ -158,7 +158,7 @@ defmodule BudgieWeb.CoreComponents do
         hidden
       >
         {gettext("Attempting to reconnect")}
-        <.icon name="hero-arrow-path" class="ml-1 h-3 w-3 animate-spin" />
+        <.icon name="hero-arrow-path" class="w-3 h-3 ml-1 animate-spin" />
       </.flash>
 
       <.flash
@@ -170,7 +170,7 @@ defmodule BudgieWeb.CoreComponents do
         hidden
       >
         {gettext("Hang in there while we get back on track")}
-        <.icon name="hero-arrow-path" class="ml-1 h-3 w-3 animate-spin" />
+        <.icon name="hero-arrow-path" class="w-3 h-3 ml-1 animate-spin" />
       </.flash>
     </div>
     """
@@ -204,7 +204,7 @@ defmodule BudgieWeb.CoreComponents do
     <.form :let={f} for={@for} as={@as} {@rest}>
       <div class="mt-10 space-y-8 bg-white">
         {render_slot(@inner_block, f)}
-        <div :for={action <- @actions} class="mt-2 flex items-center justify-between gap-6">
+        <div :for={action <- @actions} class="flex items-center justify-between gap-6 mt-2">
           {render_slot(action, f)}
         </div>
       </div>
@@ -335,7 +335,7 @@ defmodule BudgieWeb.CoreComponents do
       <select
         id={@id}
         name={@name}
-        class="mt-2 block w-full rounded-md border border-gray-300 bg-white shadow-sm focus:border-zinc-400 focus:ring-0 sm:text-sm"
+        class="block w-full mt-2 bg-white border border-gray-300 rounded-md shadow-sm focus:border-zinc-400 focus:ring-0 sm:text-sm"
         multiple={@multiple}
         {@rest}
       >
@@ -409,7 +409,7 @@ defmodule BudgieWeb.CoreComponents do
 
   def error(assigns) do
     ~H"""
-    <p class="mt-3 flex gap-3 text-sm leading-6 text-rose-600">
+    <p class="flex gap-3 mt-3 text-sm leading-6 text-rose-600">
       <.icon name="hero-exclamation-circle-mini" class="mt-0.5 h-5 w-5 flex-none" />
       {render_slot(@inner_block)}
     </p>
@@ -473,9 +473,9 @@ defmodule BudgieWeb.CoreComponents do
       end
 
     ~H"""
-    <div class="overflow-y-auto px-4 sm:overflow-visible sm:px-0">
+    <div class="px-4 overflow-y-auto sm:overflow-visible sm:px-0">
       <table class="w-[40rem] mt-11 sm:w-full">
-        <thead class="text-sm text-left leading-6 text-zinc-500">
+        <thead class="text-sm leading-6 text-left text-zinc-500">
           <tr>
             <th :for={col <- @col} class="p-0 pb-4 pr-6 font-normal">{col[:label]}</th>
             <th :if={@action != []} class="relative p-0 pb-4">
@@ -486,7 +486,7 @@ defmodule BudgieWeb.CoreComponents do
         <tbody
           id={@id}
           phx-update={match?(%Phoenix.LiveView.LiveStream{}, @rows) && "stream"}
-          class="relative divide-y divide-zinc-100 border-t border-zinc-200 text-sm leading-6 text-zinc-700"
+          class="relative text-sm leading-6 border-t divide-y divide-zinc-100 border-zinc-200 text-zinc-700"
         >
           <tr :for={row <- @rows} id={@row_id && @row_id.(row)} class="group hover:bg-zinc-50">
             <td
@@ -495,15 +495,15 @@ defmodule BudgieWeb.CoreComponents do
               class={["relative p-0", @row_click && "hover:cursor-pointer"]}
             >
               <div class="block py-4 pr-6">
-                <span class="absolute -inset-y-px right-0 -left-4 group-hover:bg-zinc-50 sm:rounded-l-xl" />
+                <span class="absolute right-0 -inset-y-px -left-4 group-hover:bg-zinc-50 sm:rounded-l-xl" />
                 <span class={["relative", i == 0 && "font-semibold text-zinc-900"]}>
                   {render_slot(col, @row_item.(row))}
                 </span>
               </div>
             </td>
-            <td :if={@action != []} class="relative w-14 p-0">
-              <div class="relative whitespace-nowrap py-4 text-right text-sm font-medium">
-                <span class="absolute -inset-y-px -right-4 left-0 group-hover:bg-zinc-50 sm:rounded-r-xl" />
+            <td :if={@action != []} class="relative p-0 w-14">
+              <div class="relative py-4 text-sm font-medium text-right whitespace-nowrap">
+                <span class="absolute left-0 -inset-y-px -right-4 group-hover:bg-zinc-50 sm:rounded-r-xl" />
                 <span
                   :for={action <- @action}
                   class="relative ml-4 font-semibold leading-6 text-zinc-900 hover:text-zinc-700"
@@ -538,7 +538,7 @@ defmodule BudgieWeb.CoreComponents do
     <div class="mt-14">
       <dl class="-my-4 divide-y divide-zinc-100">
         <div :for={item <- @item} class="flex gap-4 py-4 text-sm leading-6 sm:gap-8">
-          <dt class="w-1/4 flex-none text-zinc-500">{item.title}</dt>
+          <dt class="flex-none w-1/4 text-zinc-500">{item.title}</dt>
           <dd class="text-zinc-700">{render_slot(item)}</dd>
         </div>
       </dl>
@@ -563,7 +563,7 @@ defmodule BudgieWeb.CoreComponents do
         navigate={@navigate}
         class="text-sm font-semibold leading-6 text-zinc-900 hover:text-zinc-700"
       >
-        <.icon name="hero-arrow-left-solid" class="h-3 w-3" />
+        <.icon name="hero-arrow-left-solid" class="w-3 h-3" />
         {render_slot(@inner_block)}
       </.link>
     </div>
@@ -586,7 +586,7 @@ defmodule BudgieWeb.CoreComponents do
   ## Examples
 
       <.icon name="hero-x-mark-solid" />
-      <.icon name="hero-arrow-path" class="ml-1 w-3 h-3 animate-spin" />
+      <.icon name="hero-arrow-path" class="w-3 h-3 ml-1 animate-spin" />
   """
   attr :name, :string, required: true
   attr :class, :string, default: nil
@@ -605,13 +605,13 @@ defmodule BudgieWeb.CoreComponents do
   <.dropdown_menu id="menu">
     <.link
       navigate="/edit"
-      class="w-full px-4 py-2 text-left text-sm text-gray-700 hover:bg-gray-100 flex items-center gap-2"
+      class="flex items-center w-full gap-2 px-4 py-2 text-sm text-left text-gray-700 hover:bg-gray-100"
     >
       <.icon name="hero-pencil" class="w-4 h-4" />Edit
     </.link>
     <button
       type="button"
-      class="w-full px-4 py-2 text-left text-sm text-red-600 hover:bg-red-50 flex items-center gap-2"
+      class="flex items-center w-full gap-2 px-4 py-2 text-sm text-left text-red-600 hover:bg-red-50"
     >
       <.icon name="hero-trash" class="w-4 h-4" /> Delete
     </button>
@@ -634,19 +634,60 @@ defmodule BudgieWeb.CoreComponents do
       <button
         type="button"
         phx-click={toggle("#dropdown-#{@id}-body")}
-        class="p-2 hover:bg-gray-100 rounded-full text-gray-500"
+        class="p-2 text-gray-500 rounded-full hover:bg-gray-100"
       >
-        <.icon name="hero-ellipsis-vertical" class="h-6 w-6" />
+        <.icon name="hero-ellipsis-vertical" class="w-6 h-6" />
       </button>
       <div
         id={"dropdown-#{@id}-body"}
-        class="hidden absolute left-0 top-12 w-48 bg-white rounded-lg shadow-lg border border-gray-200 z-10"
+        class="absolute left-0 z-10 hidden w-48 bg-white border border-gray-200 rounded-lg shadow-lg top-12"
       >
         <div class="py-1">
           {render_slot(@inner_block)}
         </div>
       </div>
     </div>
+    """
+  end
+
+  @doc """
+  Renders a transaction amount as a currency value, considering the type of the transaction.
+  ## Example
+  <.transaction_amount transaction={%BudgetTransaction{type: :spending, amount: Decimal.new("24.05")}} />
+  Output:
+  <span class="text-red-500 tabular-nums">-24.05</span>
+  """
+
+  attr :transaction, Budgie.Tracking.BudgetTransaction, required: true
+
+  def transaction_amount(%{transaction: %{type: :spending, amount: amount}}),
+    do: currency(%{amount: Decimal.negate(amount)})
+
+  def transaction_amount(%{transaction: %{type: :funding, amount: amount}}),
+    do: currency(%{amount: amount})
+
+  @doc """
+  Renders a currency amount field.
+  ## Example
+  <.currency amount={Decimal.new("246.01")} />
+  Output:
+  <span class="text-green-500 tabular-nums">246.01</span>
+  """
+  attr :amount, Decimal, required: true
+  attr :class, :string, default: nil
+  attr :positive_class, :string, default: "text-green-500"
+  attr :negative_class, :string, default: "text-red-500"
+
+  def currency(assigns) do
+    ~H"""
+    <span class={[
+      "tabular-nums",
+      Decimal.gte?(@amount, 0) && @positive_class,
+      Decimal.lt?(@amount, 0) && @negative_class,
+      @class
+    ]}>
+      {Decimal.round(@amount, 2)}
+    </span>
     """
   end
 
