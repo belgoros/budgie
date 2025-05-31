@@ -7,6 +7,9 @@ defmodule Budgie.Factory do
   def without_preloads(objects) when is_list(objects), do: Enum.map(objects, &without_preloads/1)
   def without_preloads(%Tracking.Budget{} = budget), do: Ecto.reset_fields(budget, [:creator])
 
+  def without_preloads(%Tracking.BudgetPeriod{} = period),
+    do: Ecto.reset_fields(period, [:budget])
+
   def without_preloads(%Tracking.BudgetTransaction{} = transaction),
     do: Ecto.reset_fields(transaction, [:budget])
 
